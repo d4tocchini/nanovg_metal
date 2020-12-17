@@ -1058,10 +1058,11 @@ enum MNVGTarget mnvgTarget() {
   }
 
   // Initializes default blend states.
+  // TODO:
   _blendFunc = malloc(sizeof(MNVGblend));
-  _blendFunc->srcRGB = MTLBlendFactorOne;
+  _blendFunc->srcRGB = MTLBlendFactorOne; //MTLBlendFactorSourceAlpha
   _blendFunc->dstRGB = MTLBlendFactorOneMinusSourceAlpha;
-  _blendFunc->srcAlpha = MTLBlendFactorOne;
+  _blendFunc->srcAlpha =  MTLBlendFactorOne; // MTLBlendFactorSourceAlpha
   _blendFunc->dstAlpha = MTLBlendFactorOneMinusSourceAlpha;
 
   // Initializes stencil states.
@@ -1782,10 +1783,22 @@ error:
 
   // Sets blending states.
   colorAttachmentDescriptor.blendingEnabled = YES;
+
+  // TODO: D4????
+  //colorAttachmentDescriptor.rgbBlendOperation = MTLBlendOperationAdd;
+  //colorAttachmentDescriptor.alphaBlendOperation = MTLBlendOperationAdd;
+
+  //colorAttachmentDescriptor.sourceRGBBlendFactor = MTLBlendFactorSourceAlpha;
+  //colorAttachmentDescriptor.sourceAlphaBlendFactor = MTLBlendFactorSourceAlpha;
+  //colorAttachmentDescriptor.destinationRGBBlendFactor = MTLBlendFactorOneMinusSourceAlpha;
+  //colorAttachmentDescriptor.destinationAlphaBlendFactor = MTLBlendFactorOneMinusSourceAlpha;
+
+  // VS..
   colorAttachmentDescriptor.sourceRGBBlendFactor = blend->srcRGB;
   colorAttachmentDescriptor.sourceAlphaBlendFactor = blend->srcAlpha;
   colorAttachmentDescriptor.destinationRGBBlendFactor = blend->dstRGB;
   colorAttachmentDescriptor.destinationAlphaBlendFactor = blend->dstAlpha;
+
   _blendFunc->srcRGB = blend->srcRGB;
   _blendFunc->dstRGB = blend->dstRGB;
   _blendFunc->srcAlpha = blend->srcAlpha;
